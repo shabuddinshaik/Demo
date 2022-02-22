@@ -33,7 +33,7 @@ pipeline{
                 sh '''
                 docker tag bookstore:${BUILD_NUMBER} bookstore:latest
                 docker login -u shabuddinshaik --password-stdin
-                docker push shabuddinshaiik bookstore:${BUILD_NUMBER}
+                docker push shabuddinshaiik/bookstore:${BUILD_NUMBER}
                 '''
             }
         }
