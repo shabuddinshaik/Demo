@@ -5,16 +5,8 @@ def STATUS = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABO
 pipeline{
     agent any
     stages{
-        stage('Building the app using maven') {
-            steps {
-                sh '''
-                echo building the maven application
-                mvn clean install
-                '''
-            }
-        }
         stage('SonarQube analysis') {
-            withSonarQubeEnv(credentialsId: '939ad4e5f21d8381c45f0c9b92764911848f25e9', installationName: 'My SonarQube Server') { // You can override the credential to be used
+            withSonarQubeEnv(credentialsId: '939ad4e5f21d8381c45f0c9b92764911848f25e9', installationName: 'My SonarQube Server') { 
             sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
             }
         }
