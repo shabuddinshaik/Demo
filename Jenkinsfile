@@ -20,8 +20,8 @@ pipeline{
             steps {
                 sh '''
                 docker tag bookstore:${BUILD_NUMBER} bookstore:latest
-                docker login -u shabuddinshaik -p dockerhub
-                docker push shabuddinshaiik/bookstore:${BUILD_NUMBER}
+                docker login -u shabuddinshaik --password-stdin
+                docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
                 '''
             }
         }
