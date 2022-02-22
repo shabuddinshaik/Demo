@@ -4,10 +4,8 @@ def STATUS = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABO
 
 pipeline{
     agent any
+    }
     stages{
-        stage ('Checkout') {
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/shabuddinshaik/bookstore.git']]])
-        }
         stage('Building the app using maven') {
             steps {
                 sh '''
