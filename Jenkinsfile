@@ -1,8 +1,5 @@
 pipeline{
     agent any
-    environment {
-        dockerhub_pwd=credentials=('dockerhub')
-    }
     stages{
         stage('Building the app using maven') {
             steps {
@@ -23,7 +20,7 @@ pipeline{
             steps {
                 sh '''
                 docker tag bookstore:${BUILD_NUMBER} bookstore:latest
-                docker login -u shabuddinshaik -p dockerhub_pwd
+                docker login -u shabuddinshaik -p dockerhub
                 docker push shabuddinshaiik/bookstore:${BUILD_NUMBER}
                 '''
             }
