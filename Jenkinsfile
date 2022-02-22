@@ -9,13 +9,6 @@ pipeline{
                 '''
             }
         }
-        //stage('scanning with sonarqube') {
-            steps {
-                sh '''
-                mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=shabuddinshaik_bookstore
-                '''
-            }
-        //}
         stage('Building the docker image') {
             steps {
                 sh '''
