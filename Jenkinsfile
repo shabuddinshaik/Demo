@@ -4,10 +4,6 @@ def STATUS = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABO
 
 pipeline{
     agent any
-    envinorment{
-        sonarqube_pwd=credentials('SONAR_TOKEN')
-        dockerhub_pwd=credentails('dockerhub)
-    }
     stages{
         stage ('Checkout') {
         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/shabuddinshaik/bookstore.git']]])
