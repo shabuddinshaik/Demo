@@ -4,7 +4,6 @@ def STATUS = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABO
 
 pipeline{
     agent any
-    }
     stages{
         stage('Building the app using maven') {
             steps {
