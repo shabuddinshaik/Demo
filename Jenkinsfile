@@ -13,12 +13,11 @@ pipeline{
                 '''
             }
         }
-        stage('scanning with sonarqube') {
-            steps {
-                sh '''
-                mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=shabuddinshaik_bookstore
-                '''
-            }
+        stage('SonarQube analysis') {
+           def scannerHome = tool 'SonarScanner 4.0';
+           withSonarQubeEnv('My SonarQube Server') { 
+               sh "${scannerHome}/bin/sonar-scanner"
+           }
         }
         stage('Building the docker image') {
             steps {
