@@ -1,3 +1,4 @@
+
 #!/usr/bin/env groovy
 def STATUS = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABORTED': 'danger']
 
@@ -13,10 +14,12 @@ pipeline{
                 '''
             }
         }
-        stage('Code quality') {
-           withSonarQubeEnv('Sonarqube') {
-           sh "mvn sonar:sonar -Dsonar.projectKey=shabuddinshaik_bookstore  -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=3d186a4db1baa5a07cac19b10deb2fadf919e5c2"
-           }
+        stage('scanning with sonarqube') {
+            steps {
+                sh '''
+                mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=shabuddinshaik_bookstore
+                '''
+            }
         }
         stage('Building the docker image') {
             steps {
@@ -32,7 +35,8 @@ pipeline{
                 docker login -u shabuddinshaik --password-stdin
                 docker push shabuddinshaiik bookstore:${BUILD_NUMBER}
                 '''
-             }
+            }
         }
     }
+    
 }
