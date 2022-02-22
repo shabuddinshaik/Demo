@@ -1,8 +1,3 @@
-
-#!/usr/bin/env groovy
-def STATUS = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABORTED': 'danger']
-
-
 pipeline{
     agent any
     stages{
