@@ -16,16 +16,12 @@ pipeline{
                 '''
             }
         }
-        stage('Pushing to docker hub') {
-            steps {
-                sh '''
-                dockerhub_pwd=credentials('dockerhub)
-                docker login -u shabuddinshaik -p $dockerhub_pwd
-                docker tag bookstore:${BUILD_NUMBER} shabuddinshaik/bookstore:latest
-                docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
-                '''
-            }
-        }
+        stage('Push Docker Image'){
+        withCredentials([string(credentialsId: 'dockerhub', variable: 'DOKCER_HUB_PASSWORD')]) {
+          sh "docker login -u shabuddinshaik -p ${DOKCER_HUB_PASSWORD}"
+          }
+          sh 'docker push shabuddinshaik/bookstore:${BUILD_NUMBER}'
+       }
     }
     
 }
