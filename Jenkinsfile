@@ -1,5 +1,5 @@
 pipeline{
-    agent slave1
+    agent any
     stages{
         stage('Building the app using maven') {
             steps {
