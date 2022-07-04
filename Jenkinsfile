@@ -24,4 +24,5 @@ pipeline{
               sh 'docker push shabuddinshaik/bookstore:${BUILD_NUMBER}'
        }
     }  
+  }
 }
