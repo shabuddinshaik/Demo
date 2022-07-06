@@ -1,5 +1,4 @@
-pipeline{
-    agent slave1
+node('slave1') {
     stages{
         stage('Building the app using maven') {
             steps {
