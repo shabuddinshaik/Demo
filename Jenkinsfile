@@ -1,5 +1,8 @@
 pipeline {
     agent { node { label 'slave1' } }
+	environment {
+	     DOCKER_PASSWORD=credentials('dockerhub')
+  }
     stages{
         stage('Building the app using maven') {
             steps {
