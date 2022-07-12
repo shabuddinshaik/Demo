@@ -1,5 +1,8 @@
 pipeline {
     agent { node { label 'slave1' } }
+    environment {
+         DOCKERHUB = credentials('DOCKER_PASSWORD')
+}
     stages{
         stage('Building the app using maven') {
             steps {
@@ -19,7 +22,7 @@ pipeline {
         stage('Push Docker Image'){
             steps{
                sh '''
-               docker login -u shabuddinshaik p ${dockerhub}
+               docker login -u shabuddinshaik p ${DOCKER_PASSWORD}
                docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
                '''
        }
