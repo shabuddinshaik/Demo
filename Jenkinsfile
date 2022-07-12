@@ -19,7 +19,7 @@ pipeline {
         stage('Push Docker Image'){
             steps{
                sh '''
-               docker login --username shabuddinshaik --password-stdin ${dockerhub}
+               docker login -u shabuddinshaik -p ${dockerhub}
                docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
                '''
        }
