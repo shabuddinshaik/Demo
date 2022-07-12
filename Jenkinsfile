@@ -1,5 +1,5 @@
 pipeline {
-	ageny any
+	agent any
     //agent { node { label 'slave1' } }
 	environment {
 	     DOCKER_PASSWORD=credentials('dockerhub')
