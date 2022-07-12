@@ -18,11 +18,10 @@ pipeline {
         }
         stage('Push Docker Image'){
             steps{
-                 //withCredentials([string(credentialsId: 'dockerhub', variable: 'DOKCER_HUB_PASSWORD')]) {
-                   sh "docker login -u shabuddinshaik -p ${DOKCER_HUB_PASSWORD}"
-                  }//
-                  sh "docker login -u shabuddinshaik -p ${dockerhub}"
-                 sh 'docker push shabuddinshaik/bookstore:${BUILD_NUMBER}'
+               sh '''
+               docker login -u shabuddinshaik -p ${dockerhub}"
+               docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
+               '''
        }
     }  
   }
