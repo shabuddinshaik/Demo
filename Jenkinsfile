@@ -22,7 +22,7 @@ pipeline {
         stage('Push Docker Image'){
             steps{
                sh '''
-	       echo $DOCKER_PASSWORD | docker login -u shabuddinshaik --password-stdin "${DOCKER_PASSWORD}"
+	       echo $DOCKER_PASSWORD | docker login -u shabuddinshaik --password-stdin ${DOCKER_PASSWORD}
                docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
                '''
        }
