@@ -1,7 +1,6 @@
 pipeline {
      agent { node { label 'slave1' } }
-	withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'Username', passwordVariable: 'Password')]) {
-		
+			
     stages{
         stage('Building the app using maven') {
             steps {
@@ -18,10 +17,16 @@ pipeline {
                 '''
             }
         }
+	    Stage ('Docker login') {
+	  withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'Username', passwordVariable: 'Password')]) {
+		sh '''
+	       echo $Password | docker login -u $Username --password-stdin  
+	       '''
+	  }
+	}
         stage('Push Docker Image'){
             steps{
-               sh '''
-	       echo $Password | docker login -u $Username --password-stdin  
+               sh ''' 
                docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
                '''
        }
