@@ -17,6 +17,7 @@ pipeline {
             steps {
                 sh '''
                 docker build . -t bookstore:${BUILD_NUMBER}
+		docker tag bookstore:${BUILD_NUMBER} shabuddinshaik/bookstore:${BUILD_NUMBER}
                 '''
             }
         }
