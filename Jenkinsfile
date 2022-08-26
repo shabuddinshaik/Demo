@@ -12,6 +12,12 @@ pipeline {
                 mvn clean install
                 '''
             }
+			post{
+		    always{
+			    jiraSendBuildInfo:'jenkinsjira.atlassian.net'
+		    }
+		}	
+		  	
         }
         stage('Building the docker image') {
             steps {
@@ -20,6 +26,11 @@ pipeline {
 		docker tag bookstore:${BUILD_NUMBER} shabuddinshaik/bookstore:${BUILD_NUMBER}
                 '''
             }
+			post{
+		    always{
+			    jiraSendBuildInfo:'jenkinsjira.atlassian.net'
+		    }
+		}	
         }
         stage('Push Docker Image'){
             steps{
@@ -28,11 +39,12 @@ pipeline {
                docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
              '''
             }
+			post{
+		    always{
+			    jiraSendBuildInfo:'jenkinsjira.atlassian.net'
+		    }
+		 }	
         }
-	 post{
-	     always{
-		  jiraSendBuildInfo:'jenkinsjira.atlassian.net'
-	     }
-	 } 	    
+	    	    
     }
 }
