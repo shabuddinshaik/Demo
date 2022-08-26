@@ -27,13 +27,12 @@ pipeline {
 	       echo ${DOCKER_PASSWORD} | docker login -u shabuddinshaik --password-stdin 
                docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
              '''
-       }
+            }
+        }
+	 post {
+	     always {
+		  jiraSendBuildInfo:'jenkinsjira.atlassian.net'
+	     }
+	 } 	    
     }
-	    post {
-		    always {
-			    jiraSendBuildInfo:'jenkinsjira.atlassian.net'
-		    }
-	    } 
-			    
-  }
 }
