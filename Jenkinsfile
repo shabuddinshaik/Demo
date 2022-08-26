@@ -29,8 +29,8 @@ pipeline {
              '''
             }
         }
-	 post {
-	     always {
+	 post{
+	     always{
 		  jiraSendBuildInfo:'jenkinsjira.atlassian.net'
 	     }
 	 } 	    
