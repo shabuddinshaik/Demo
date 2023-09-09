@@ -9,6 +9,7 @@ pipeline {
             steps {
                 sh '''
                 echo building the maven application
+                apt install maven -y
                 mvn clean install
                 '''
             }
