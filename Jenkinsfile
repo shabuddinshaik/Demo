@@ -1,8 +1,8 @@
 pipeline {
-     agent { node { label 'slave1' } }
+     agent any
 
    environment {
-	DOCKER_PASSWORD=credentials('ef7778be-90ee-4315-8a50-c72f7288975b')
+	DOCKER_PASSWORD=credentials('7098d543-649c-4c0d-9378-64e9bcfc56e9')
   }		
     stages{
         stage('Building the app using maven') {
@@ -12,12 +12,6 @@ pipeline {
                 mvn clean install
                 '''
             }
-			post{
-		    always{
-			    jiraSendBuildInfo:'jenkinsjira.atlassian.net'
-		    }
-		}	
-		  	
         }
         stage('Building the docker image') {
             steps {
@@ -26,11 +20,6 @@ pipeline {
 		docker tag bookstore:${BUILD_NUMBER} shabuddinshaik/bookstore:${BUILD_NUMBER}
                 '''
             }
-			post{
-		    always{
-			    jiraSendBuildInfo:'jenkinsjira.atlassian.net'
-		    }
-		}	
         }
         stage('Push Docker Image'){
             steps{
@@ -39,11 +28,6 @@ pipeline {
                docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
              '''
             }
-			post{
-		    always{
-			    jiraSendBuildInfo:'jenkinsjira.atlassian.net'
-		    }
-		 }	
         }
 	    	    
     }
