@@ -1,34 +1,39 @@
 pipeline {
-     agent any
-
-   environment {
-	DOCKER_PASSWORD=credentials('7098d543-649c-4c0d-9378-64e9bcfc56e9')
-  }		
-    stages{
+    agent any
+    stages {
         stage('Building the app using maven') {
             steps {
                 sh '''
-                echo building the maven application
+                echo Building the Maven application
                 mvn clean install
                 '''
             }
         }
-        stage('Building the docker image') {
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('My SonarQube Server') {
+                    sh 'mvn clean verify sonar:sonar -Dsonar.login=myAuthenticationToken'
+                }
+            }
+        }
+        stage('Code Coverage') {
             steps {
                 sh '''
-                docker build . -t bookstore:${BUILD_NUMBER}
-		docker tag bookstore:${BUILD_NUMBER} shabuddinshaik/bookstore:${BUILD_NUMBER}
+                echo Running code coverage
+                mvn jacoco:report
                 '''
             }
         }
-        stage('Push Docker Image'){
-            steps{
-               sh ''' 
-	       echo ${DOCKER_PASSWORD} | docker login -u shabuddinshaik --password-stdin 
-               docker push shabuddinshaik/bookstore:${BUILD_NUMBER}
-             '''
-            }
+    }
+    post {
+        always {
+            echo 'This will always run'
         }
-	    	    
+        success {
+            echo 'This will run only if the build is successful'
+        }
+        failure {
+            echo 'This will run only if the build fails'
+        }
     }
 }
